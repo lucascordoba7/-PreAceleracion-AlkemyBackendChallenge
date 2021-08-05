@@ -44,10 +44,6 @@ public class UserController {
     @PostMapping("/register")
     public User createUser(@RequestBody UserDTO userDTO){
         return userService.insertUser(userDTO);
-
-
-
-
     }
 
     @GetMapping
