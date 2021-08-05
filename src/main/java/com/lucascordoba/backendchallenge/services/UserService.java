@@ -12,7 +12,7 @@ public interface UserService {
     public List<UserDTO> listUsers();
     public User findUser(UserDTO userDTO);
     public User findUser(Long id);
-    public User insertUser(UserDTO userDTO);
+    public Boolean insertUser(UserDTO userDTO);
     public Boolean deleteUser(UserDTO userDTO);
     Optional<User> findByUsername(String username);
 }

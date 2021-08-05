@@ -7,6 +7,7 @@ import com.lucascordoba.backendchallenge.security.JwtUtil;
 import com.lucascordoba.backendchallenge.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -42,8 +43,13 @@ public class UserController {
         return ResponseEntity.ok(jwt);
     }
     @PostMapping("/register")
-    public User createUser(@RequestBody UserDTO userDTO){
-        return userService.insertUser(userDTO);
+    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO){
+        ModelMapper modelMapper=new ModelMapper();
+        if(userService.insertUser(userDTO))
+        {
+            return ResponseEntity.status(HttpStatus.CREATED).body(userDTO);
+        }
+        return ResponseEntity.status(400).body(userDTO);
     }
 
     @GetMapping

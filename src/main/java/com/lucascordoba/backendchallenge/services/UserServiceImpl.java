@@ -30,18 +30,27 @@ public class UserServiceImpl implements  UserService{
 
     @Override
     public User findUser(UserDTO userDTO) {
-        return null;
+        return userRepository.findById(userDTO.getId()).orElse(null);
     }
 
     @Override
     public User findUser(Long id) {
-        return null;
+        return userRepository.findById(id).orElse(null);
     }
 
     @Override
-    public User insertUser(UserDTO userDTO) {
-        User user=modelMapper.map(userDTO,User.class);
-        return userRepository.save(user);
+    public Boolean insertUser(UserDTO userDTO) {
+        User user=new User();
+        user=modelMapper.map(userDTO,User.class);
+        if(user.getRole()==null || !user.getRole().contains("ROLE_ADMIN"))
+            user.setRole("ROLE_USER");
+        try {
+            userRepository.save(user);
+            return true;
+        }catch (Exception e)
+        {
+            return false;
+        }
 
     }
 
