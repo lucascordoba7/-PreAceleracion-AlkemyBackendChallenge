@@ -1,8 +1,11 @@
 package com.lucascordoba.backendchallenge.controllers;
 
+import com.lucascordoba.backendchallenge.dto.UserDTO;
 import com.lucascordoba.backendchallenge.models.User;
 import com.lucascordoba.backendchallenge.repositories.UserRepository;
 import com.lucascordoba.backendchallenge.security.JwtUtil;
+import com.lucascordoba.backendchallenge.services.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,33 +23,28 @@ public class UserController {
     @Autowired
     UserDetailsService userDetailsService;
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
 
     @Autowired
     JwtUtil jwtUtil;
 
     @PostMapping("/login")
-    public ResponseEntity<String> createAuthenticationToken (@RequestParam(name = "username") String username,@RequestParam(name = "password")String password) throws Exception {
+    public ResponseEntity<String> createAuthenticationToken (@RequestBody UserDTO userDTO) throws Exception {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken
-                            (username,password));
+                            (userDTO.getUsername(),userDTO.getPassword()));
         }catch (BadCredentialsException e){
             throw new Exception("Incorrect username or password",e);
         }
-         UserDetails userDetails= userDetailsService.loadUserByUsername(username);
+         UserDetails userDetails= userDetailsService.loadUserByUsername(userDTO.getUsername());
          String jwt=jwtUtil.generateToken(userDetails);
         return ResponseEntity.ok(jwt);
     }
     @PostMapping("/register")
-    public User createUser(@RequestParam(name = "username") String username,
-                           @RequestParam(name = "password")String password,
-                           @RequestParam(name = "roles") String roles){
-        User user=new User();
-        user.setUsername(username);
-        user.setPassword(password);
-        user.setRole(roles);
-        return userRepository.save(user);
+    public User createUser(@RequestBody UserDTO userDTO){
+        return userService.insertUser(userDTO);
+
 
 
 

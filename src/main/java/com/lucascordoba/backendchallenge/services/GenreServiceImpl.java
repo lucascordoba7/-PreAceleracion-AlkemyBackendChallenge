@@ -15,6 +15,7 @@ import java.util.List;
 public class GenreServiceImpl implements GenreService{
     @Autowired
     GenreRepository genreRepository;
+
     ModelMapper modelMapper=new ModelMapper();
 
 
@@ -28,5 +29,36 @@ public class GenreServiceImpl implements GenreService{
         }
         return dtos;
     }
+
+    @Override
+    public GenreModel findGenre(GenreDTO genre) {
+        GenreModel entity=genreRepository.getById(genre.getId());
+        return entity;
+    }
+    @Override
+    public GenreModel findGenre(Long id) {
+        GenreModel entity=genreRepository.getById(id);
+        return entity;
+    }
+
+    @Override
+    public GenreModel insertGenre(GenreDTO genre) {
+        GenreModel entity=modelMapper.map(genre,GenreModel.class);
+        return genreRepository.save(entity);
+
+    }
+
+    @Override
+    public Boolean deleteGenre(GenreDTO genre) {
+        GenreModel entity=modelMapper.map(genre,GenreModel.class);
+        try {
+            genreRepository.deleteById(entity.getId());
+            return true;
+        }catch (Exception e)
+        {
+            return false;
+        }
+    }
+
 
 }

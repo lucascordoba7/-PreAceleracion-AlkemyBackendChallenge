@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface CharacterRepository extends JpaRepository<CharacterModel,Long> {
-
+    public abstract List<CharacterModel> findByAge(Integer age);
 }

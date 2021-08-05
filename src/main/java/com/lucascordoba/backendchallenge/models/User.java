@@ -14,12 +14,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
-    @Column(name = "user_username")
+    @Column(name = "user_username",unique = true)
     private String username;
     @Column(name = "user_password")
     private String password;
     @Column(name = "user_role")
     private String role;
-//    @Column(name = "user_token")
-//    private String token;
+
 }
