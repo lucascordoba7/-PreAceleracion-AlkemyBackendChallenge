@@ -20,6 +20,6 @@ public class User {
     private String password;
     @Column(name = "user_role")
     private String role;
-    @Column(name = "user_token")
-    private String token;
+//    @Column(name = "user_token")
+//    private String token;
 }

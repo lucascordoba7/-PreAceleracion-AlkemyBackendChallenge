@@ -1,7 +1,8 @@
 package com.lucascordoba.backendchallenge.controllers;
 
+import com.lucascordoba.backendchallenge.models.User;
+import com.lucascordoba.backendchallenge.repositories.UserRepository;
 import com.lucascordoba.backendchallenge.security.JwtUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -9,22 +10,22 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@Slf4j
+@RequestMapping("/auth")
 public class UserController {
     @Autowired
     AuthenticationManager authenticationManager;
     @Autowired
     UserDetailsService userDetailsService;
     @Autowired
+    UserRepository userRepository;
+
+    @Autowired
     JwtUtil jwtUtil;
 
-    @PostMapping("/auth/login")
+    @PostMapping("/login")
     public ResponseEntity<String> createAuthenticationToken (@RequestParam(name = "username") String username,@RequestParam(name = "password")String password) throws Exception {
         try {
             authenticationManager.authenticate(
@@ -37,6 +38,20 @@ public class UserController {
          String jwt=jwtUtil.generateToken(userDetails);
         return ResponseEntity.ok(jwt);
     }
+    @PostMapping("/register")
+    public User createUser(@RequestParam(name = "username") String username,
+                           @RequestParam(name = "password")String password,
+                           @RequestParam(name = "roles") String roles){
+        User user=new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setRole(roles);
+        return userRepository.save(user);
+
+
+
+    }
+
     @GetMapping
     public String hello(){
         return "hello";
