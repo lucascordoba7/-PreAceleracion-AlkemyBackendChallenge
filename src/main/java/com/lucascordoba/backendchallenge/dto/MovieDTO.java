@@ -22,7 +22,7 @@ public class MovieDTO implements Serializable {
     private LocalDate creationDate;
     private Integer rating;
     private GenreDTO genre;
-    private List<CharacterModel> asociatedCharacters;
+    private List<CharacterDTO> asociatedCharacters;
 
     public MovieModel buildEntity(){
         return MovieModel.builder()
@@ -32,7 +32,7 @@ public class MovieDTO implements Serializable {
                 .creationDate(this.creationDate)
                 .rating(this.rating)
                 .genre(this.genre.buildEntity())
-                .asociatedCharacters(this.asociatedCharacters)
+                .asociatedCharacters(CharacterDTO.dtosToEntities(this.asociatedCharacters))
                 .build();
     }
     public static MovieDTO from(MovieModel entity){
@@ -43,7 +43,7 @@ public class MovieDTO implements Serializable {
                 .creationDate(entity.getCreationDate())
                 .rating(entity.getRating())
                 .genre(GenreDTO.simpleFrom(entity.getGenre()))
-                .asociatedCharacters(entity.getAsociatedCharacters())
+                .asociatedCharacters(CharacterDTO.entitiesToSimpleDtos(entity.getAsociatedCharacters()))
                 .build();
     }
     public static MovieDTO simpleFrom(MovieModel entity){

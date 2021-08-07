@@ -16,18 +16,11 @@ import java.util.List;
 public class CharacterServiceImpl implements CharacterService{
     @Autowired
     private CharacterRepository characterRepository;
-    private ModelMapper modelMapper;
-
 
     @Override
     @Transactional(readOnly = true)
     public List<CharacterDTO> listCharacters() {
-        List<CharacterModel> entities=characterRepository.findAll();
-        List<CharacterDTO> dtos=new ArrayList<>();
-        for(CharacterModel entity: entities){
-            dtos.add(CharacterDTO.from(entity));
-        }
-        return dtos;
+        return CharacterDTO.entitiesToDtos(characterRepository.findAll());
     }
 
 

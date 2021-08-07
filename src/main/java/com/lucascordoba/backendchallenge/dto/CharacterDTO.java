@@ -53,10 +53,18 @@ public class CharacterDTO {
     public static List<CharacterDTO> entitiesToDtos(List<CharacterModel> entities){
         List<CharacterDTO> dtos=new ArrayList<>();
         for(CharacterModel entity: entities){
+            dtos.add(from(entity));
+        }
+        return dtos;
+    }
+    public static List<CharacterDTO> entitiesToSimpleDtos(List<CharacterModel> entities){
+        List<CharacterDTO> dtos=new ArrayList<>();
+        for(CharacterModel entity: entities){
             dtos.add(simpleFrom(entity));
         }
         return dtos;
     }
+
     public static List<CharacterModel> dtosToEntities(List<CharacterDTO> dtos){
         List<CharacterModel> entities= new ArrayList<>();
         for(CharacterDTO dto:dtos){
