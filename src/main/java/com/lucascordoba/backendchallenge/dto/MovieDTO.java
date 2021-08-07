@@ -10,6 +10,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 @Data
 @Builder
@@ -41,9 +42,31 @@ public class MovieDTO implements Serializable {
                 .title(entity.getTitle())
                 .creationDate(entity.getCreationDate())
                 .rating(entity.getRating())
-                .genre(GenreDTO.from(entity.getGenre()))
+                .genre(GenreDTO.simpleFrom(entity.getGenre()))
                 .asociatedCharacters(entity.getAsociatedCharacters())
                 .build();
+    }
+    public static MovieDTO simpleFrom(MovieModel entity){
+        return MovieDTO.builder()
+                .title(entity.getTitle())
+                .image(entity.getImage())
+                .creationDate(entity.getCreationDate())
+                .rating(entity.getRating())
+                .build();
+    }
+    public static List<MovieDTO> entitiesToDtos(List<MovieModel> entities){
+        List<MovieDTO> dtos=new ArrayList<>();
+        for(MovieModel entity : entities){
+            dtos.add(simpleFrom(entity));
+        }
+        return dtos;
+    }
+    public static List<MovieModel> dtosToEntities(List<MovieDTO> dtos){
+        List<MovieModel> entities=new ArrayList<>();
+        for(MovieDTO dto : dtos){
+            entities.add(dto.buildEntity());
+        }
+        return entities;
     }
 
 }

@@ -6,6 +6,7 @@ import com.lucascordoba.backendchallenge.models.MovieModel;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -19,7 +20,7 @@ public class CharacterDTO {
     private Integer age;
     private Double weight;
     private String BackgroundHistory;
-    private List<MovieModel> asociatedMovies;
+    private List<MovieDTO> asociatedMovies;
 
     public CharacterModel buildEntity(){
         return CharacterModel.builder()
@@ -29,7 +30,7 @@ public class CharacterDTO {
                 .age(this.age)
                 .weight(this.weight)
                 .BackgroundHistory(this.BackgroundHistory)
-                .asociatedMovies(this.asociatedMovies)
+                .asociatedMovies(MovieDTO.dtosToEntities(this.asociatedMovies))
                 .build();
     }
     public static CharacterDTO from(CharacterModel entity){
@@ -40,8 +41,28 @@ public class CharacterDTO {
                 .age(entity.getAge())
                 .weight(entity.getWeight())
                 .BackgroundHistory(entity.getBackgroundHistory())
-                .asociatedMovies(entity.getAsociatedMovies())
+                .asociatedMovies(MovieDTO.entitiesToDtos(entity.getAsociatedMovies()))
                 .build();
+    }
+    public static CharacterDTO simpleFrom(CharacterModel entity){
+        return CharacterDTO.builder()
+                .name(entity.getName())
+                .image(entity.getImage())
+                .build();
+    }
+    public static List<CharacterDTO> entitiesToDtos(List<CharacterModel> entities){
+        List<CharacterDTO> dtos=new ArrayList<>();
+        for(CharacterModel entity: entities){
+            dtos.add(simpleFrom(entity));
+        }
+        return dtos;
+    }
+    public static List<CharacterModel> dtosToEntities(List<CharacterDTO> dtos){
+        List<CharacterModel> entities= new ArrayList<>();
+        for(CharacterDTO dto:dtos){
+            entities.add(dto.buildEntity());
+        }
+        return entities;
     }
 
 

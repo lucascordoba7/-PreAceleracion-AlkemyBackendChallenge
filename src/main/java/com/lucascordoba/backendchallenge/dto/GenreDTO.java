@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 @Data
 @Builder
@@ -16,24 +17,30 @@ public class GenreDTO implements Serializable {
     private Long id;
     private String name;
     private String image;
-    private List<MovieModel> asociatedMovies;
+    private List<MovieDTO> asociatedMovies;
 
-    public GenreModel buildEntity(){
+    public GenreModel buildEntity() {
         return GenreModel.builder()
                 .id(this.id)
                 .name(this.name)
                 .image(this.image)
-                .asociatedMovies(this.asociatedMovies)
+                .asociatedMovies(MovieDTO.dtosToEntities(this.asociatedMovies))
                 .build();
     }
-    public static GenreDTO from(GenreModel entity){
+
+    public static GenreDTO from(GenreModel entity) {
         return GenreDTO.builder()
                 .id(entity.getId())
                 .name(entity.getName())
                 .image(entity.getImage())
-                .asociatedMovies(entity.getAsociatedMovies())
+                .asociatedMovies(MovieDTO.entitiesToDtos(entity.getAsociatedMovies()))
                 .build();
+    }
 
+    public static GenreDTO simpleFrom(GenreModel entity) {
+        return GenreDTO.builder()
+                .name(entity.getName())
+                .build();
     }
 
 

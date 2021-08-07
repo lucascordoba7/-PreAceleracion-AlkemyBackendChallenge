@@ -1,5 +1,6 @@
 package com.lucascordoba.backendchallenge.models;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
