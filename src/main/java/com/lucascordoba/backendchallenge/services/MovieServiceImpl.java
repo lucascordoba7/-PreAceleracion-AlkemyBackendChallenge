@@ -1,6 +1,5 @@
 package com.lucascordoba.backendchallenge.services;
 
-import com.lucascordoba.backendchallenge.dto.ListedMovieDTO;
 import com.lucascordoba.backendchallenge.dto.MovieDTO;
 import com.lucascordoba.backendchallenge.models.MovieModel;
 import com.lucascordoba.backendchallenge.repositories.MovieRepository;
@@ -15,15 +14,14 @@ import java.util.List;
 public class MovieServiceImpl implements MovieService{
     @Autowired
     MovieRepository movieRepository;
-    ModelMapper modelMapper=new ModelMapper();
     @Override
     @Transactional(readOnly = true)
-    public List<ListedMovieDTO> listMovies() {
+    public List<MovieDTO> listMovies() {
         List<MovieModel>entities= movieRepository.findAll();
-        List<ListedMovieDTO> dtos=new ArrayList<>();
-        for(MovieModel movie: entities)
+        List<MovieDTO> dtos=new ArrayList<>();
+        for(MovieModel entity: entities)
         {
-            dtos.add(modelMapper.map(movie,ListedMovieDTO.class));
+            dtos.add(MovieDTO.from(entity));
         }
         return dtos;
     }

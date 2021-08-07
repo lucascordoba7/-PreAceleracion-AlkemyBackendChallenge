@@ -16,14 +16,12 @@ import java.util.Optional;
 public class UserServiceImpl implements  UserService{
     @Autowired
     UserRepository userRepository;
-    ModelMapper modelMapper=new ModelMapper();
-
     @Override
     public List<UserDTO> listUsers() {
        List<User> entities= userRepository.findAll();
        List<UserDTO> dtos=new ArrayList<>();
        for(User entity:entities){
-           dtos.add(modelMapper.map(entity,UserDTO.class));
+           dtos.add(UserDTO.from(entity));
        }
        return dtos;
     }
@@ -39,13 +37,11 @@ public class UserServiceImpl implements  UserService{
     }
 
     @Override
-    public Boolean insertUser(UserDTO userDTO) {
-        User user=new User();
-        user=modelMapper.map(userDTO,User.class);
+    public Boolean insertUser(UserDTO user) {
         if(user.getRole()==null || !user.getRole().contains("ROLE_ADMIN"))
             user.setRole("ROLE_USER");
         try {
-            userRepository.save(user);
+            userRepository.save(user.buildEntity());
             return true;
         }catch (Exception e)
         {

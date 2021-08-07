@@ -1,6 +1,5 @@
 package com.lucascordoba.backendchallenge.controllers;
 
-import com.lucascordoba.backendchallenge.dto.ListedMovieDTO;
 import com.lucascordoba.backendchallenge.dto.MovieDTO;
 import com.lucascordoba.backendchallenge.models.MovieModel;
 import com.lucascordoba.backendchallenge.services.MovieService;
@@ -20,7 +19,7 @@ public class MovieController {
     MovieService movieService;
 
     @GetMapping
-    public ResponseEntity<List<ListedMovieDTO>> getMovies(){
+    public ResponseEntity<List<MovieDTO>> getMovies(){
         return ResponseEntity.ok(movieService.listMovies());
     }
 }

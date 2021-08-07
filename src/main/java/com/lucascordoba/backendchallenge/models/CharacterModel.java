@@ -1,6 +1,7 @@
 package com.lucascordoba.backendchallenge.models;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @Table(name = "characters")
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class CharacterModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,11 +36,4 @@ public class CharacterModel {
     @ManyToMany(mappedBy = "asociatedCharacters")
     private List<MovieModel> asociatedMovies;
 
-    public CharacterModel(Long id, String image, Integer age, Double weight)
-    {
-        this.id=id;
-        this.image=image;
-        this.age=age;
-        this.weight=weight;
-    }
 }

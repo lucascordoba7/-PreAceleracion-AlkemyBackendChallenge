@@ -1,7 +1,6 @@
 package com.lucascordoba.backendchallenge.services;
 
 import com.lucascordoba.backendchallenge.dto.CharacterDTO;
-import com.lucascordoba.backendchallenge.dto.ListedCharacterDTO;
 import com.lucascordoba.backendchallenge.models.CharacterModel;
 import com.lucascordoba.backendchallenge.repositories.CharacterRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -22,12 +21,11 @@ public class CharacterServiceImpl implements CharacterService{
 
     @Override
     @Transactional(readOnly = true)
-    public List<ListedCharacterDTO> listCharacters() {
-        modelMapper=new ModelMapper();
+    public List<CharacterDTO> listCharacters() {
         List<CharacterModel> entities=characterRepository.findAll();
-        List<ListedCharacterDTO> dtos=new ArrayList<>();
+        List<CharacterDTO> dtos=new ArrayList<>();
         for(CharacterModel entity: entities){
-            dtos.add(modelMapper.map(entity, ListedCharacterDTO.class));
+            dtos.add(CharacterDTO.from(entity));
         }
         return dtos;
     }

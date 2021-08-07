@@ -1,6 +1,7 @@
 package com.lucascordoba.backendchallenge.models;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @Table(name = "movies")
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class MovieModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

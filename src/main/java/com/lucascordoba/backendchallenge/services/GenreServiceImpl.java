@@ -15,17 +15,13 @@ import java.util.List;
 public class GenreServiceImpl implements GenreService{
     @Autowired
     GenreRepository genreRepository;
-
-    ModelMapper modelMapper=new ModelMapper();
-
-
     @Override
     @Transactional(readOnly = true)
     public List<GenreDTO> listGenres() {
         List<GenreModel> entities=genreRepository.findAll();
         List<GenreDTO> dtos= new ArrayList<>();
-        for (GenreModel genre : entities) {
-            dtos.add(modelMapper.map(genre,GenreDTO.class));
+        for (GenreModel entity : entities) {
+            dtos.add(GenreDTO.from(entity));
         }
         return dtos;
     }
@@ -43,14 +39,12 @@ public class GenreServiceImpl implements GenreService{
 
     @Override
     public GenreModel insertGenre(GenreDTO genre) {
-        GenreModel entity=modelMapper.map(genre,GenreModel.class);
-        return genreRepository.save(entity);
-
+        return genreRepository.save(genre.buildEntity());
     }
 
     @Override
     public Boolean deleteGenre(GenreDTO genre) {
-        GenreModel entity=modelMapper.map(genre,GenreModel.class);
+        GenreModel entity=genre.buildEntity();
         try {
             genreRepository.deleteById(entity.getId());
             return true;

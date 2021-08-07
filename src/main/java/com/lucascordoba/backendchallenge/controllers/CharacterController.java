@@ -1,6 +1,6 @@
 package com.lucascordoba.backendchallenge.controllers;
 
-import com.lucascordoba.backendchallenge.dto.ListedCharacterDTO;
+import com.lucascordoba.backendchallenge.dto.CharacterDTO;
 import com.lucascordoba.backendchallenge.services.CharacterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ public class CharacterController {
 
 
     @GetMapping
-    public ResponseEntity<List<ListedCharacterDTO>> getCharacters(){
+    public ResponseEntity<List<CharacterDTO>> getCharacters(){
         return ResponseEntity.ok(characterService.listCharacters());
     }
 }
