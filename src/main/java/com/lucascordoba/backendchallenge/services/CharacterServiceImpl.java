@@ -23,6 +23,30 @@ public class CharacterServiceImpl implements CharacterService{
         return CharacterDTO.entitiesToDtos(characterRepository.findAll());
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public CharacterDTO findCharacter(Long id) {
+        CharacterModel entity=characterRepository.findById(id).orElse(null);
+        return CharacterDTO.from(entity);
+    }
+
+    @Override
+    public CharacterModel insertCharacter(CharacterDTO character) {
+        CharacterModel entity=character.buildEntity();
+        return characterRepository.save(entity);
+    }
+
+    @Override
+    public Boolean deleteCharacter(CharacterDTO character) {
+        CharacterModel entity=character.buildEntity();
+        try{
+            characterRepository.deleteById(entity.getId());
+            return true;
+        }catch (Exception e)
+        {
+            return false;
+        }
+    }
 
 
 }

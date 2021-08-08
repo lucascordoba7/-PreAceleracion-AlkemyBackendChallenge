@@ -52,10 +52,4 @@ public class UserController {
         return ResponseEntity.status(400).body(userDTO);
     }
 
-    @GetMapping
-    public String hello(){
-        return "hello";
-    }
-
-
 }

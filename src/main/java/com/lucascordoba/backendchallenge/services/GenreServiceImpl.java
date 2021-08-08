@@ -27,29 +27,24 @@ public class GenreServiceImpl implements GenreService{
     }
 
     @Override
-    public GenreModel findGenre(GenreDTO genre) {
-        GenreModel entity=genreRepository.getById(genre.getId());
-        return entity;
-    }
-    @Override
-    public GenreModel findGenre(Long id) {
+    public GenreDTO findGenre(Long id) {
         GenreModel entity=genreRepository.getById(id);
-        return entity;
+        return GenreDTO.from(entity);
     }
 
     @Override
-    public GenreModel insertGenre(GenreDTO genre) {
-        return genreRepository.save(genre.buildEntity());
+    public GenreModel insertGenre(GenreDTO genreDTO) {
+        GenreModel entity=genreDTO.buildEntity();
+        return genreRepository.save(entity);
     }
 
     @Override
-    public Boolean deleteGenre(GenreDTO genre) {
-        GenreModel entity=genre.buildEntity();
+    public Boolean deleteGenre(GenreDTO genreDTO) {
+        GenreModel entity=genreDTO.buildEntity();
         try {
             genreRepository.deleteById(entity.getId());
             return true;
-        }catch (Exception e)
-        {
+        }catch (Exception e){
             return false;
         }
     }

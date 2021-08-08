@@ -26,5 +26,28 @@ public class MovieServiceImpl implements MovieService{
         return dtos;
     }
 
+    @Override
+    public MovieDTO findMovie(Long id) {
+        MovieModel entity=movieRepository.findById(id).orElse(new MovieModel());
+        return MovieDTO.from(entity);
+    }
+
+    @Override
+    public MovieModel insertMovie(MovieDTO movieDTO) {
+        MovieModel entity=movieDTO.buildEntity();
+        return movieRepository.save(entity);
+    }
+
+    @Override
+    public Boolean deleteMovie(MovieDTO movieDTO) {
+        MovieModel entity=movieDTO.buildEntity();
+        try {
+            movieRepository.deleteById(entity.getId());
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
 
 }

@@ -56,16 +56,18 @@ public class MovieDTO implements Serializable {
     }
     public static List<MovieDTO> entitiesToDtos(List<MovieModel> entities){
         List<MovieDTO> dtos=new ArrayList<>();
-        for(MovieModel entity : entities){
-            dtos.add(simpleFrom(entity));
-        }
+        if (entities!=null)
+            for(MovieModel entity : entities){
+                dtos.add(simpleFrom(entity));
+            }
         return dtos;
     }
     public static List<MovieModel> dtosToEntities(List<MovieDTO> dtos){
         List<MovieModel> entities=new ArrayList<>();
-        for(MovieDTO dto : dtos){
-            entities.add(dto.buildEntity());
-        }
+        if(dtos!= null)
+            for(MovieDTO dto : dtos){
+                entities.add(dto.buildEntity());
+            }
         return entities;
     }
 

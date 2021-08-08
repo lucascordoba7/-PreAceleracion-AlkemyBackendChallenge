@@ -7,5 +7,8 @@ import java.util.List;
 
 public interface MovieService {
     public List<MovieDTO> listMovies();
+    public MovieDTO findMovie(Long id);
+    public MovieModel insertMovie(MovieDTO movieDTO);
+    public Boolean deleteMovie(MovieDTO movieDTO);
 
 }
