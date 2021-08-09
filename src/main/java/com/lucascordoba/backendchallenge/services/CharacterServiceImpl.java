@@ -24,7 +24,8 @@ public class CharacterServiceImpl implements CharacterService{
     @Override
     @Transactional(readOnly = true)
     public List<CharacterDTO> listCharacters() {
-        return CharacterDTO.entitiesToDtos(characterRepository.findAll());
+        return CharacterDTO.entitiesToSimpleDtos(characterRepository.findAll());
+
     }
 
     @Override
