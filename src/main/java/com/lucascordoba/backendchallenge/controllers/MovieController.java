@@ -18,9 +18,27 @@ public class MovieController {
     MovieService movieService;
 
     @GetMapping
-    public ResponseEntity<List<MovieDTO>> getMovies(){
-        return ResponseEntity.ok(movieService.listMovies());
+    public ResponseEntity<?> listMovies(
+            @RequestParam (value = "name",required = false) String name,
+            @RequestParam (value = "genre",required = false) Long idGenre,
+            @RequestParam(value = "order",required = false) String order
+    ){
+        List<MovieDTO> result;
+        if (name==null && idGenre==null)
+            return ResponseEntity.ok(movieService.listMovies());
+        try {
+            result=movieService.searchMovies(name,idGenre,order);
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+         return ResponseEntity.ok(result);
     }
+
+
+//    @GetMapping
+//    public ResponseEntity<List<MovieDTO>> getMovies(){
+//        return ResponseEntity.ok(movieService.listMovies());
+//    }
 
     @GetMapping("/{id}")
     public ResponseEntity<MovieDTO> findMovie (@PathVariable Long id){

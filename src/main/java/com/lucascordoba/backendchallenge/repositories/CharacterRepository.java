@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface CharacterRepository extends JpaRepository<CharacterModel,Long> {
 
-    List<CharacterModel> findByNameOrAgeOrAsociatedMovies(String name, Integer age,MovieModel movieModel);
+   public abstract List<CharacterModel> findByNameOrAgeOrAsociatedMovies(String name, Integer age,MovieModel movieModel);
 
 }

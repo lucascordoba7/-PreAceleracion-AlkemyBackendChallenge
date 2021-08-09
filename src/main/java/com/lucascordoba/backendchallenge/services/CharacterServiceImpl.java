@@ -5,6 +5,7 @@ import com.lucascordoba.backendchallenge.dto.MovieDTO;
 import com.lucascordoba.backendchallenge.models.CharacterModel;
 import com.lucascordoba.backendchallenge.models.MovieModel;
 import com.lucascordoba.backendchallenge.repositories.CharacterRepository;
+import com.lucascordoba.backendchallenge.repositories.MovieRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ import java.util.Map;
 public class CharacterServiceImpl implements CharacterService{
     @Autowired
     private CharacterRepository characterRepository;
+    @Autowired
+    private MovieService movieService;
 
     @Override
     @Transactional(readOnly = true)
@@ -58,7 +61,7 @@ public class CharacterServiceImpl implements CharacterService{
 
         MovieModel movie=new MovieModel(0L);
         if(id!=null)
-            movie.setId(id);
+            movie=movieService.findMovie(id).buildEntity();
         List<CharacterModel> entities=characterRepository.findByNameOrAgeOrAsociatedMovies(name,age,movie);
         return CharacterDTO.entitiesToDtos(entities);
     }
