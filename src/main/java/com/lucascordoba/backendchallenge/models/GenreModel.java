@@ -25,7 +25,7 @@ public class GenreModel {
     @Column(name = "genre_image")
     private String image;
 
-    @OneToMany(mappedBy = "genre",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "genre",fetch = FetchType.LAZY,cascade=CascadeType.ALL)
     private List<MovieModel> asociatedMovies;
 
 }

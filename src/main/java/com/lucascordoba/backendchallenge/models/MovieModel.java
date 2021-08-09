@@ -32,7 +32,7 @@ public class MovieModel {
     @Column(name = "movie_rating")
     private int rating;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "genre_id",nullable = false)
     private GenreModel genre;
 
@@ -47,5 +47,8 @@ public class MovieModel {
         this.title=title;
         this.creationDate=creationDate;
         this.rating=rating;
+    }
+    public MovieModel (Long id){
+        this.id=id;
     }
 }

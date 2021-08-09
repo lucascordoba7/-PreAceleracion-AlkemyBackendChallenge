@@ -34,7 +34,10 @@ public class CharacterModel {
 
     @Column(name = "character_history")
     private String BackgroundHistory;
-    @ManyToMany(mappedBy = "asociatedCharacters")
+    @ManyToMany(mappedBy = "asociatedCharacters",cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
     private List<MovieModel> asociatedMovies;
 
 }

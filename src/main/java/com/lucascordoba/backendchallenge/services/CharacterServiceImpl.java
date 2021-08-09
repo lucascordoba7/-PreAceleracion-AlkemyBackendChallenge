@@ -1,7 +1,9 @@
 package com.lucascordoba.backendchallenge.services;
 
 import com.lucascordoba.backendchallenge.dto.CharacterDTO;
+import com.lucascordoba.backendchallenge.dto.MovieDTO;
 import com.lucascordoba.backendchallenge.models.CharacterModel;
+import com.lucascordoba.backendchallenge.models.MovieModel;
 import com.lucascordoba.backendchallenge.repositories.CharacterRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -11,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 @Service
 @Slf4j
 public class CharacterServiceImpl implements CharacterService{
@@ -46,6 +50,16 @@ public class CharacterServiceImpl implements CharacterService{
         {
             return false;
         }
+    }
+
+    @Override
+    public List<CharacterDTO> searchCharacter(String name,Integer age,Long id) {
+
+        MovieModel movie=new MovieModel(0L);
+        if(id!=null)
+            movie.setId(id);
+        List<CharacterModel> entities=characterRepository.findByNameOrAgeOrAsociatedMovies(name,age,movie);
+        return CharacterDTO.entitiesToDtos(entities);
     }
 
 

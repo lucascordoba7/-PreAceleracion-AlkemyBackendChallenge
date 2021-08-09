@@ -1,5 +1,6 @@
 package com.lucascordoba.backendchallenge.repositories;
 
+import com.lucascordoba.backendchallenge.dto.MovieDTO;
 import com.lucascordoba.backendchallenge.models.CharacterModel;
 import com.lucascordoba.backendchallenge.models.MovieModel;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,5 +10,7 @@ import java.util.List;
 
 @Repository
 public interface CharacterRepository extends JpaRepository<CharacterModel,Long> {
-    public abstract List<CharacterModel> findByAge(Integer age);
+
+    List<CharacterModel> findByNameOrAgeOrAsociatedMovies(String name, Integer age,MovieModel movieModel);
+
 }

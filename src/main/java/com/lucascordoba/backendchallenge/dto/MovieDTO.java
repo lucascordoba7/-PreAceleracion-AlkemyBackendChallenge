@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.lucascordoba.backendchallenge.models.CharacterModel;
 import com.lucascordoba.backendchallenge.models.GenreModel;
 import com.lucascordoba.backendchallenge.models.MovieModel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,6 +17,8 @@ import java.util.List;
 @Data
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@AllArgsConstructor
+@NoArgsConstructor
 public class MovieDTO implements Serializable {
     private Long id;
     private String image;
@@ -24,6 +28,9 @@ public class MovieDTO implements Serializable {
     private GenreDTO genre;
     private List<CharacterDTO> asociatedCharacters;
 
+    public MovieDTO(Long id){
+        this.id=id;
+    }
     public MovieModel buildEntity(){
         return MovieModel.builder()
                 .id(this.id)
