@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface MovieRepository extends JpaRepository<MovieModel,Long> {
-    public abstract List<MovieModel> findByTitleOrGenre_Id(String title, Long idGenre, Sort sort);
+    List<MovieModel> findByTitleOrGenre_Id(String title, Long idGenre, Sort sort);
 //    public abstract List<MovieModel> findByTitleOrGenre_IdOrderByIdAsc(String title,Long id,Sort sort);
 }

@@ -7,11 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,6 +17,8 @@ public class UserDTO {
     private String username;
     private String password;
     private String role;
+    private String email;
+    private String name;
 
     public User buildEntity(){
         return User.builder()
@@ -29,6 +26,8 @@ public class UserDTO {
                 .username(this.username)
                 .password(this.password)
                 .role(this.role)
+                .email(this.email)
+                .name(this.name)
                 .build();
     }
     public static UserDTO from(User entity){
@@ -37,6 +36,8 @@ public class UserDTO {
                 .username(entity.getUsername())
                 .password(entity.getPassword())
                 .role(entity.getRole())
+                .email(entity.getEmail())
+                .name(entity.getName())
                 .build();
     }
 }

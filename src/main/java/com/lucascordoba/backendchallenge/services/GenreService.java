@@ -7,8 +7,8 @@ import com.lucascordoba.backendchallenge.models.GenreModel;
 import java.util.List;
 
 public interface GenreService {
-    public List<GenreDTO> listGenres();
-    public GenreDTO findGenre(Long id);
-    public GenreModel insertGenre(GenreDTO genreDTO);
-    public Boolean deleteGenre(GenreDTO genreDTO);
+    List<GenreDTO> listGenres();
+    GenreDTO findGenre(Long id);
+    GenreModel insertGenre(GenreDTO genreDTO);
+    Boolean deleteGenre(GenreDTO genreDTO);
 }

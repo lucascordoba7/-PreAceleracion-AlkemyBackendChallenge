@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    public List<UserDTO> listUsers();
-    public User findUser(UserDTO userDTO);
-    public User findUser(Long id);
-    public Boolean insertUser(UserDTO userDTO);
-    public Boolean deleteUser(UserDTO userDTO);
+    List<UserDTO> listUsers();
+    User findUser(UserDTO userDTO);
+    User findUser(Long id);
+    Boolean insertUser(UserDTO userDTO);
+    Boolean deleteUser(UserDTO userDTO);
     Optional<User> findByUsername(String username);
 }

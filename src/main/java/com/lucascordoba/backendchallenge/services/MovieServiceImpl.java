@@ -52,10 +52,14 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public List<MovieDTO> searchMovies(String title, Long idGenre, String order) {
-        List<MovieModel> entities;
-        entities = "DESC".equals(order.toLowerCase().trim()) ? movieRepository.findByTitleOrGenre_Id(title, idGenre, Sort.by(Sort.Direction.DESC, "id"))
-                :
-                movieRepository.findByTitleOrGenre_Id(title, idGenre, Sort.by(Sort.Direction.ASC, "id"));
+        List<MovieModel> entities = null;
+        if(order!=null)
+            order=order.toLowerCase().trim();
+        entities =
+                "desc".equals(order) ?
+                        movieRepository.findByTitleOrGenre_Id(title, idGenre, Sort.by(Sort.Direction.DESC, "id"))
+                        :
+                        movieRepository.findByTitleOrGenre_Id(title, idGenre, Sort.by(Sort.Direction.ASC, "id"));
         return MovieDTO.entitiesToDtos(entities);
     }
 

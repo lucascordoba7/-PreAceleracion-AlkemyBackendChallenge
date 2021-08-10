@@ -2,7 +2,6 @@ package com.lucascordoba.backendchallenge.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.lucascordoba.backendchallenge.models.CharacterModel;
-import com.lucascordoba.backendchallenge.models.MovieModel;
 import lombok.Builder;
 import lombok.Data;
 

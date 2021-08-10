@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -34,12 +33,10 @@ public class MovieController {
          return ResponseEntity.ok(result);
     }
 
-
-//    @GetMapping
-//    public ResponseEntity<List<MovieDTO>> getMovies(){
-//        return ResponseEntity.ok(movieService.listMovies());
-//    }
-
+    @PostMapping
+    public ResponseEntity<?> insertNewMovie(@RequestBody MovieDTO movieDTO){
+        return ResponseEntity.status(HttpStatus.CREATED).body(movieService.insertMovie(movieDTO));
+    }
     @GetMapping("/{id}")
     public ResponseEntity<MovieDTO> findMovie (@PathVariable Long id){
         return ResponseEntity.ok(movieService.findMovie(id));

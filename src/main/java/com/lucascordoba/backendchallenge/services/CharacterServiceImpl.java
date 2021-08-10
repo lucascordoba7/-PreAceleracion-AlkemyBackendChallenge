@@ -1,20 +1,15 @@
 package com.lucascordoba.backendchallenge.services;
 
 import com.lucascordoba.backendchallenge.dto.CharacterDTO;
-import com.lucascordoba.backendchallenge.dto.MovieDTO;
 import com.lucascordoba.backendchallenge.models.CharacterModel;
 import com.lucascordoba.backendchallenge.models.MovieModel;
 import com.lucascordoba.backendchallenge.repositories.CharacterRepository;
-import com.lucascordoba.backendchallenge.repositories.MovieRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @Slf4j
@@ -34,7 +29,7 @@ public class CharacterServiceImpl implements CharacterService{
     @Override
     @Transactional(readOnly = true)
     public CharacterDTO findCharacter(Long id) {
-        CharacterModel entity=characterRepository.findById(id).orElse(null);
+        CharacterModel entity=characterRepository.findById(id).orElse(new CharacterModel());
         return CharacterDTO.from(entity);
     }
 

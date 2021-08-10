@@ -1,6 +1,5 @@
 package com.lucascordoba.backendchallenge.models;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,6 +22,10 @@ public class User {
     private String username;
     @Column(name = "user_password")
     private String password;
+    @Column(name = "user_email")
+    private String email;
+    @Column(name = "user_name")
+    private String name;
     @Column(name = "user_role")
     private String role;
 

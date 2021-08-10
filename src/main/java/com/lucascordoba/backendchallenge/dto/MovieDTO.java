@@ -1,19 +1,17 @@
 package com.lucascordoba.backendchallenge.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.lucascordoba.backendchallenge.models.CharacterModel;
-import com.lucascordoba.backendchallenge.models.GenreModel;
 import com.lucascordoba.backendchallenge.models.MovieModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 @Data
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
