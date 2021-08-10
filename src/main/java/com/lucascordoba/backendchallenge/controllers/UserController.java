@@ -50,8 +50,7 @@ public class UserController {
     public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
         if(userService.insertUser(userDTO))
         {
-            log.info(userDTO.getEmail());
-            emailService.sendEmail(userDTO);
+            //emailService.sendEmail(userDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(userDTO);
         }
         return ResponseEntity.status(400).body(userDTO);

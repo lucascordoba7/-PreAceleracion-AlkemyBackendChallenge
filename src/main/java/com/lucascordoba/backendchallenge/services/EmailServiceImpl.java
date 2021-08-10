@@ -20,12 +20,14 @@ import java.io.IOException;
 @Slf4j
 public class EmailServiceImpl implements EmailService{
 
-    @Value("${spring.sendgrid.api-key}")
+    @Value("${spring.sendgrid.api-key:}")
     private String api_key;
+    @Value("${spring.sendgrid.fromEmail}")
+    private String fromEmail;
 
 
     public void sendEmail(UserDTO user) {
-        Email from = new Email("lucascordoba65@gmail.com");
+        Email from = new Email(fromEmail);
         String subject = "Backend Alkemy Challenge";
         Email to = new Email(user.getEmail());
         Content content = new Content("text/plain", "Welcome "+user.getName()+".\nYour username is: "+user.getUsername()+"\nThanks for register!");
@@ -38,9 +40,6 @@ public class EmailServiceImpl implements EmailService{
             request.setEndpoint("mail/send");
             request.setBody(mail.build());
             Response response = sg.api(request);
-//            System.out.println(response.getStatusCode());
-//            System.out.println(response.getBody());
-//            System.out.println(response.getHeaders());
         } catch (IOException ex) {
             ex.printStackTrace();
         }
