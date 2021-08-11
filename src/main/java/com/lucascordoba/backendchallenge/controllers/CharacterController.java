@@ -38,10 +38,10 @@ public class CharacterController {
     public ResponseEntity<?> findCharacter(@PathVariable Long id) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(characterService.findCharacter(id));
-        } catch (NoSuchElementException noSuchElementException) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(noSuchElementException.getMessage());
-        } catch (Exception exception) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
+        } catch (NoSuchElementException ns) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ns.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 

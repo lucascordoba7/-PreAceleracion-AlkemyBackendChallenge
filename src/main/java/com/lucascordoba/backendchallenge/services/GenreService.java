@@ -9,6 +9,7 @@ import java.util.List;
 public interface GenreService {
     List<GenreDTO> listGenres();
     GenreDTO findGenre(Long id);
-    GenreModel insertGenre(GenreDTO genreDTO);
+    GenreDTO insertGenre(GenreDTO genreDTO);
     Boolean deleteGenre(GenreDTO genreDTO);
+    Boolean deleteGenre(Long id);
 }

@@ -36,8 +36,9 @@ public class MovieModel {
     @JoinColumn(name = "genre_id")
     private GenreModel genre;
 
-    @ManyToMany
-    @JoinTable(name = "characters_movies",joinColumns = @JoinColumn(name = "movie_id"),
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "characters_movies",
+            joinColumns = @JoinColumn(name = "movie_id"),
     inverseJoinColumns = @JoinColumn(name = "character_id"))
     private List<CharacterModel> asociatedCharacters;
 

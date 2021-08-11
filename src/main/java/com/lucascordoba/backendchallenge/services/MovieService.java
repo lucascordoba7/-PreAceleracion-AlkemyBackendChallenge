@@ -8,8 +8,9 @@ import java.util.List;
 public interface MovieService {
     List<MovieDTO> listMovies();
     MovieDTO findMovie(Long id);
-    MovieModel insertMovie(MovieDTO movieDTO);
+    MovieDTO insertMovie(MovieDTO movieDTO);
     Boolean deleteMovie(MovieDTO movieDTO);
+    Boolean deleteMovie(Long id);
     List<MovieDTO> searchMovies(String title, Long idGenre, String order);
 
 }

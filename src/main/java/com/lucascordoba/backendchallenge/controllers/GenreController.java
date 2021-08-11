@@ -4,11 +4,13 @@ import com.lucascordoba.backendchallenge.dto.GenreDTO;
 import com.lucascordoba.backendchallenge.models.GenreModel;
 import com.lucascordoba.backendchallenge.services.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/genres")
@@ -22,18 +24,47 @@ public class GenreController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GenreDTO> getGenreById(@PathVariable Long id) {
-        return ResponseEntity.ok(genreService.findGenre(id));
+    public ResponseEntity<?> getGenreById(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(genreService.findGenre(id));
+        } catch (NoSuchElementException noSuchElementException) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(noSuchElementException.getMessage());
+        } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
+        }
     }
-    @PutMapping
-    public ResponseEntity<GenreModel> insertGenre(@RequestBody GenreDTO genreDTO){
-        return ResponseEntity.status(HttpStatus.CREATED).body(genreService.insertGenre(genreDTO));
+    @PostMapping
+    public ResponseEntity<?> createGenre(@RequestBody GenreDTO genre) {
+
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(genreService.insertGenre(genre));
+        } catch (InvalidDataAccessApiUsageException d) {
+            d.printStackTrace();
+            return ResponseEntity.status(400).body(d.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
     }
-    @DeleteMapping
-    public ResponseEntity<Boolean> deleteGenre(@RequestBody GenreDTO genreDTO){
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(genreService.deleteGenre(genreDTO));
+    @PutMapping("/{id}")
+    public ResponseEntity<?> insertGenre(@PathVariable Long id,@RequestBody GenreDTO genreDTO) {
+        genreDTO.setId(id);
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(genreService.insertGenre(genreDTO));
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body(e.getMessage());
+        }
+
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Boolean> deleteGenre(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(genreService.deleteGenre(id));
+    }
+    @DeleteMapping
+    public ResponseEntity<Boolean> deleteGenre(@RequestBody GenreDTO genreDTO) {
+        return ResponseEntity.status(HttpStatus.OK).body(genreService.deleteGenre(genreDTO));
+    }
 
 
 }

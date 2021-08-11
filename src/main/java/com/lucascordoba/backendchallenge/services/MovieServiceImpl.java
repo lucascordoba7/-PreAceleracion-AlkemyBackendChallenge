@@ -1,7 +1,12 @@
 package com.lucascordoba.backendchallenge.services;
 
+import com.lucascordoba.backendchallenge.dto.CharacterDTO;
 import com.lucascordoba.backendchallenge.dto.MovieDTO;
+import com.lucascordoba.backendchallenge.models.CharacterModel;
+import com.lucascordoba.backendchallenge.models.GenreModel;
 import com.lucascordoba.backendchallenge.models.MovieModel;
+import com.lucascordoba.backendchallenge.repositories.CharacterRepository;
+import com.lucascordoba.backendchallenge.repositories.GenreRepository;
 import com.lucascordoba.backendchallenge.repositories.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -15,6 +20,10 @@ import java.util.List;
 public class MovieServiceImpl implements MovieService {
     @Autowired
     MovieRepository movieRepository;
+    @Autowired
+    CharacterRepository characterRepository;
+    @Autowired
+    GenreRepository genreRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -33,16 +42,34 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public MovieModel insertMovie(MovieDTO movieDTO) {
-        MovieModel entity = movieDTO.buildEntity();
-        return movieRepository.save(entity);
+    public MovieDTO insertMovie(MovieDTO movieDTO) {
+        List<CharacterModel> asociatedCharacters=new ArrayList<>();
+        if(movieDTO.getAsociatedCharacters()!=null){
+            for (CharacterDTO character:movieDTO.getAsociatedCharacters()){
+                CharacterModel entity=characterRepository.findById(character.getId()).get();
+                asociatedCharacters.add(entity);
+            }
+        }
+        MovieModel entity = movieDTO.buildSimpleEntity();
+        GenreModel entityGenre=genreRepository.findById(movieDTO.getGenre().getId()).get();
+        entity.setAsociatedCharacters(asociatedCharacters);
+        entity.setGenre(entityGenre);
+        return MovieDTO.from(movieRepository.save(entity));
     }
 
     @Override
     public Boolean deleteMovie(MovieDTO movieDTO) {
-        MovieModel entity = movieDTO.buildEntity();
         try {
-            movieRepository.deleteById(entity.getId());
+            movieRepository.deleteById(movieDTO.getId());
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    @Override
+    public Boolean deleteMovie(Long id) {
+        try {
+            movieRepository.deleteById(id);
             return true;
         } catch (Exception e) {
             return false;
@@ -52,8 +79,9 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public List<MovieDTO> searchMovies(String title, Long idGenre, String order) {
         List<MovieModel> entities = null;
-        if(order!=null)
-            order=order.toLowerCase().trim();
+
+        order=(order!=null)?order.toLowerCase().trim() : null;
+
         entities =
                 "desc".equals(order) ?
                         movieRepository.findByTitleOrGenre_Id(title, idGenre, Sort.by(Sort.Direction.DESC, "id"))

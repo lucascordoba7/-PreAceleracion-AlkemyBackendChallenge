@@ -4,11 +4,13 @@ import com.lucascordoba.backendchallenge.dto.MovieDTO;
 import com.lucascordoba.backendchallenge.models.MovieModel;
 import com.lucascordoba.backendchallenge.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/movies")
@@ -32,21 +34,44 @@ public class MovieController {
         }
          return ResponseEntity.ok(result);
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findMovie (@PathVariable Long id){
+        try {
+            return ResponseEntity.ok(movieService.findMovie(id));
+        }catch (NoSuchElementException ns){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ns.getMessage());
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+
+    }
 
     @PostMapping
     public ResponseEntity<?> insertNewMovie(@RequestBody MovieDTO movieDTO){
-        return ResponseEntity.status(HttpStatus.CREATED).body(movieService.insertMovie(movieDTO));
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(movieService.insertMovie(movieDTO));
+        }catch (InvalidDataAccessApiUsageException d){
+            return ResponseEntity.status(400).body(d.getMessage());
+        }catch (Exception e){
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
     }
-    @GetMapping("/{id}")
-    public ResponseEntity<MovieDTO> findMovie (@PathVariable Long id){
-        return ResponseEntity.ok(movieService.findMovie(id));
-    }
-    @PutMapping
-    public ResponseEntity<MovieModel> insertMovie(@RequestBody MovieDTO movieDTO){
-        return ResponseEntity.status(HttpStatus.CREATED).body(movieService.insertMovie(movieDTO));
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> insertMovie(@PathVariable Long id,@RequestBody MovieDTO movieDTO){
+        movieDTO.setId(id);
+        try {
+            return ResponseEntity.ok(movieService.insertMovie(movieDTO));
+        }catch (Exception e){
+            return ResponseEntity.status(400).body(e.getMessage());
+        }
     }
     @DeleteMapping
     public ResponseEntity<Boolean> deleteMovie(@RequestBody MovieDTO movieDTO){
         return ResponseEntity.ok(movieService.deleteMovie(movieDTO));
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Boolean> deleteMovie(@PathVariable Long id){
+        return ResponseEntity.ok(movieService.deleteMovie(id));
     }
 }
