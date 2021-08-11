@@ -40,6 +40,15 @@ public class MovieDTO implements Serializable {
                 .asociatedCharacters(CharacterDTO.dtosToEntities(this.asociatedCharacters))
                 .build();
     }
+    public MovieModel buildSimpleEntity(){
+        return MovieModel.builder()
+                .id(this.id)
+                .image(this.image)
+                .title(this.title)
+                .creationDate(this.creationDate)
+                .rating(this.rating)
+                .build();
+    }
     public static MovieDTO from(MovieModel entity){
         return MovieDTO.builder()
                 .id(entity.getId())

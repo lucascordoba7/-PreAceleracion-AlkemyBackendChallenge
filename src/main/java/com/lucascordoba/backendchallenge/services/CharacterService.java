@@ -10,8 +10,9 @@ import java.util.List;
 public interface CharacterService {
     List<CharacterDTO> listCharacters();
     CharacterDTO findCharacter(Long id);
-    CharacterModel insertCharacter(CharacterDTO character);
+    CharacterDTO insertCharacter(CharacterDTO character);
     Boolean deleteCharacter(CharacterDTO character);
+    Boolean deleteCharacter(Long id);
     List<CharacterDTO> searchCharacter(String name, Integer age, Long id);
 
 }

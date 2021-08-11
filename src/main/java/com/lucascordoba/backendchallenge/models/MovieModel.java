@@ -33,7 +33,7 @@ public class MovieModel {
     private int rating;
 
     @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name = "genre_id",nullable = false)
+    @JoinColumn(name = "genre_id")
     private GenreModel genre;
 
     @ManyToMany

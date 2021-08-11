@@ -29,8 +29,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public MovieDTO findMovie(Long id) {
-        MovieModel entity = movieRepository.findById(id).orElse(new MovieModel());
-        return MovieDTO.from(entity);
+        return MovieDTO.from(movieRepository.findById(id).get());
     }
 
     @Override

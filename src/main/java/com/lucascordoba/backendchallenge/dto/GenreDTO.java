@@ -27,6 +27,7 @@ public class GenreDTO implements Serializable {
                 .build();
     }
 
+
     public static GenreDTO from(GenreModel entity) {
         return GenreDTO.builder()
                 .id(entity.getId())
