@@ -1,6 +1,6 @@
 Challenge de la preaceleración de Alkemy.
 
-Documentacion: https://documenter.getpostman.com/view/16875251/Tzz5vexa
+Documentacion: https://documenter.getpostman.com/view/16875251/Tzz7McqB
 
 Para Ejecutar se debe implementar los siguientes cambios en "application.properties"
 
