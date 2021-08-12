@@ -23,7 +23,7 @@ public class CharacterDTO {
     private String name;
     private Integer age;
     private Double weight;
-    private String BackgroundHistory;
+    private String backgroundHistory;
     private List<MovieDTO> asociatedMovies;
 
     public CharacterDTO(Long id){
@@ -37,7 +37,7 @@ public class CharacterDTO {
                 .name(this.name)
                 .age(this.age)
                 .weight(this.weight)
-                .BackgroundHistory(this.BackgroundHistory)
+                .backgroundHistory(this.backgroundHistory)
                 .asociatedMovies(MovieDTO.dtosToEntities(this.asociatedMovies))
                 .build();
     }
@@ -48,7 +48,7 @@ public class CharacterDTO {
                 .name(this.name)
                 .age(this.age)
                 .weight(this.weight)
-                .BackgroundHistory(this.BackgroundHistory)
+                .backgroundHistory(this.backgroundHistory)
                 .asociatedMovies(asociatedMovies)
                 .build();
     }
@@ -59,7 +59,7 @@ public class CharacterDTO {
                 .name(entity.getName())
                 .age(entity.getAge())
                 .weight(entity.getWeight())
-                .BackgroundHistory(entity.getBackgroundHistory())
+                .backgroundHistory(entity.getBackgroundHistory())
                 .asociatedMovies(MovieDTO.entitiesToSimpleDtos(entity.getAsociatedMovies()))
                 .build();
     }

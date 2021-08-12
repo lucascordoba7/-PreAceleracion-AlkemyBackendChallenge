@@ -33,7 +33,7 @@ public class CharacterModel {
     private Double weight;
 
     @Column(name = "character_history")
-    private String BackgroundHistory;
+    private String backgroundHistory;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "characters_movies",
