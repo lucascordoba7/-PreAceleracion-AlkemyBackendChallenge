@@ -41,7 +41,7 @@ public class UserController {
         }
          UserDetails userDetails= userDetailsService.loadUserByUsername(userDTO.getUsername());
          String jwt=jwtUtil.generateToken(userDetails);
-        return ResponseEntity.ok(jwt);
+        return ResponseEntity.ok(new JwtResponse(jwt));
     }
     @PostMapping("/auth/register")
     public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
@@ -57,4 +57,10 @@ public class UserController {
         return ResponseEntity.ok("Welcome");
     }
 
+}
+class JwtResponse{
+    public String jwt;
+    public JwtResponse(String jwt){
+        this.jwt=jwt;
+    }
 }

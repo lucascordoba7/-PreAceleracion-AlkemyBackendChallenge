@@ -50,10 +50,9 @@ public class MovieServiceImpl implements MovieService {
                 asociatedCharacters.add(entity);
             }
         }
-        MovieModel entity = movieDTO.buildSimpleEntity();
         GenreModel entityGenre=genreRepository.findById(movieDTO.getGenre().getId()).get();
-        entity.setAsociatedCharacters(asociatedCharacters);
-        entity.setGenre(entityGenre);
+
+        MovieModel entity = movieDTO.buildEntity(asociatedCharacters,entityGenre);
         return MovieDTO.from(movieRepository.save(entity));
     }
 

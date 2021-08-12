@@ -47,9 +47,9 @@ public class MovieController {
     }
 
     @PostMapping
-    public ResponseEntity<?> insertNewMovie(@RequestBody MovieDTO movieDTO){
+    public ResponseEntity<?> createMovie(@RequestBody MovieDTO movie){
         try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(movieService.insertMovie(movieDTO));
+            return ResponseEntity.status(HttpStatus.CREATED).body(movieService.insertMovie(movie));
         }catch (InvalidDataAccessApiUsageException d){
             return ResponseEntity.status(400).body(d.getMessage());
         }catch (Exception e){

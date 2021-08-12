@@ -33,7 +33,7 @@ public class GenreDTO implements Serializable {
                 .id(entity.getId())
                 .name(entity.getName())
                 .image(entity.getImage())
-                .asociatedMovies(MovieDTO.entitiesToDtos(entity.getAsociatedMovies()))
+                .asociatedMovies(MovieDTO.entitiesToSimpleDtos(entity.getAsociatedMovies()))
                 .build();
     }
 

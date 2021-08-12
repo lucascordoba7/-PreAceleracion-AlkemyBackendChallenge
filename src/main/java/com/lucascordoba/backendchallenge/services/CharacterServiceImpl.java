@@ -41,7 +41,7 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
     @Override
-    public CharacterDTO insertCharacter(CharacterDTO character) throws InvalidDataAccessApiUsageException {
+    public CharacterDTO insertCharacter(CharacterDTO character) {
         List<MovieModel> asociatedMovies = new ArrayList<>();
         if(character.getAsociatedMovies()!=null){
             for (MovieDTO movie : character.getAsociatedMovies()) {
@@ -49,9 +49,8 @@ public class CharacterServiceImpl implements CharacterService {
                 asociatedMovies.add(entity);
             }
         }
-        CharacterModel entity = character.buildSimpleEntity();
-        entity.setAsociatedMovies(asociatedMovies);
-        return CharacterDTO.from(characterRepository.saveAndFlush(entity));
+        CharacterModel entity = character.buildEntity(asociatedMovies);
+        return CharacterDTO.from(characterRepository.save(entity));
     }
 
     @Override

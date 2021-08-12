@@ -2,6 +2,7 @@ package com.lucascordoba.backendchallenge.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.lucascordoba.backendchallenge.models.CharacterModel;
+import com.lucascordoba.backendchallenge.models.MovieModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -40,7 +41,7 @@ public class CharacterDTO {
                 .asociatedMovies(MovieDTO.dtosToEntities(this.asociatedMovies))
                 .build();
     }
-    public CharacterModel buildSimpleEntity(){
+    public CharacterModel buildEntity(List<MovieModel> asociatedMovies){
         return CharacterModel.builder()
                 .id(this.id)
                 .image(this.image)
@@ -48,6 +49,7 @@ public class CharacterDTO {
                 .age(this.age)
                 .weight(this.weight)
                 .BackgroundHistory(this.BackgroundHistory)
+                .asociatedMovies(asociatedMovies)
                 .build();
     }
     public static CharacterDTO from(CharacterModel entity){
@@ -58,7 +60,7 @@ public class CharacterDTO {
                 .age(entity.getAge())
                 .weight(entity.getWeight())
                 .BackgroundHistory(entity.getBackgroundHistory())
-                .asociatedMovies(MovieDTO.entitiesToDtos(entity.getAsociatedMovies()))
+                .asociatedMovies(MovieDTO.entitiesToSimpleDtos(entity.getAsociatedMovies()))
                 .build();
     }
     public static CharacterDTO simpleFrom(CharacterModel entity){

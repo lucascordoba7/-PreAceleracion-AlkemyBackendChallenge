@@ -21,7 +21,7 @@ public class GenreServiceImpl implements GenreService{
         List<GenreModel> entities=genreRepository.findAll();
         List<GenreDTO> dtos= new ArrayList<>();
         for (GenreModel entity : entities) {
-            dtos.add(GenreDTO.from(entity));
+            dtos.add(GenreDTO.simpleFrom(entity));
         }
         return dtos;
     }

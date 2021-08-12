@@ -1,6 +1,8 @@
 package com.lucascordoba.backendchallenge.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.lucascordoba.backendchallenge.models.CharacterModel;
+import com.lucascordoba.backendchallenge.models.GenreModel;
 import com.lucascordoba.backendchallenge.models.MovieModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,13 +42,15 @@ public class MovieDTO implements Serializable {
                 .asociatedCharacters(CharacterDTO.dtosToEntities(this.asociatedCharacters))
                 .build();
     }
-    public MovieModel buildSimpleEntity(){
+    public MovieModel buildEntity(List<CharacterModel> asociatedCharacters, GenreModel genre){
         return MovieModel.builder()
                 .id(this.id)
                 .image(this.image)
                 .title(this.title)
                 .creationDate(this.creationDate)
                 .rating(this.rating)
+                .genre(genre)
+                .asociatedCharacters(asociatedCharacters)
                 .build();
     }
     public static MovieDTO from(MovieModel entity){
@@ -72,6 +76,15 @@ public class MovieDTO implements Serializable {
         if (entities!=null)
             for(MovieModel entity : entities){
                 dtos.add(from(entity));
+            }
+        return dtos;
+    }
+    public static List<MovieDTO> entitiesToSimpleDtos(List<MovieModel> entities){
+        List<MovieDTO> dtos=new ArrayList<>();
+        if (entities!=null)
+            for(MovieModel entity : entities){
+
+                dtos.add(simpleFrom(entity));
             }
         return dtos;
     }
