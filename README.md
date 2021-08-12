@@ -1,5 +1,7 @@
 Challenge de la preaceleración de Alkemy.
 
+Documentacion: https://documenter.getpostman.com/view/16875251/Tzz5vexa
+
 Para Ejecutar se debe implementar los siguientes cambios en "application.properties"
 
 spring.datasource.url=(URL BASE DE DATOS)
