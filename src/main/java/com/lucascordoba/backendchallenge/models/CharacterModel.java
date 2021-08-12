@@ -34,7 +34,11 @@ public class CharacterModel {
 
     @Column(name = "character_history")
     private String BackgroundHistory;
-    @ManyToMany(mappedBy = "asociatedCharacters",cascade = CascadeType.ALL)
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "characters_movies",
+            joinColumns = @JoinColumn(name = "character_id"),
+            inverseJoinColumns = @JoinColumn(name = "movie_id"))
     private List<MovieModel> asociatedMovies;
 
 }
