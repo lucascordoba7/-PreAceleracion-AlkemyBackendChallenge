@@ -36,16 +36,13 @@ public class UserServiceImpl implements  UserService{
     }
 
     @Override
-    public Boolean insertUser(UserDTO user) {
-        if(user.getRole()==null || !user.getRole().contains("ROLE_ADMIN"))
-            user.setRole("ROLE_USER");
-        try {
+    public void insertUser(UserDTO user) {
+        if(user.getRole()==null || !user.getRole().contains("ROLE_ADMIN")){
+            user.setRole("ROLE_USER");}
+
             userRepository.save(user.buildEntity());
-            return true;
-        }catch (Exception e)
-        {
-            return false;
-        }
+
+
 
     }
 
