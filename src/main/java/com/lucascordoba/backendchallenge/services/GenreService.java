@@ -10,6 +10,6 @@ public interface GenreService {
     List<GenreDTO> listGenres();
     GenreDTO findGenre(Long id);
     GenreDTO insertGenre(GenreDTO genreDTO);
-    Boolean deleteGenre(GenreDTO genreDTO);
-    Boolean deleteGenre(Long id);
+    void deleteGenre(GenreDTO genreDTO);
+    void deleteGenre(Long id);
 }

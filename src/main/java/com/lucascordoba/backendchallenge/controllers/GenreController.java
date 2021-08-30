@@ -3,16 +3,20 @@ package com.lucascordoba.backendchallenge.controllers;
 import com.lucascordoba.backendchallenge.dto.GenreDTO;
 import com.lucascordoba.backendchallenge.models.GenreModel;
 import com.lucascordoba.backendchallenge.services.GenreService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.UnexpectedRollbackException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
+@Slf4j
 @RequestMapping("/genres")
 public class GenreController {
     @Autowired
@@ -39,10 +43,17 @@ public class GenreController {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(genreService.insertGenre(genre));
         } catch (InvalidDataAccessApiUsageException d) {
-            d.printStackTrace();
+            log.error(d.getMessage());
             return ResponseEntity.status(400).body(d.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (DataIntegrityViolationException v) {
+            log.error(v.getMessage());
+            return ResponseEntity.status(400).body(v.getMessage());
+        }catch (IllegalStateException e) {
+            log.error(e.getMessage());
+            return ResponseEntity.status(409).body(e.getMessage());
+        }
+        catch (Exception e) {
+            log.error(e.getMessage());
             return ResponseEntity.status(500).body(e.getMessage());
         }
     }
@@ -52,18 +63,37 @@ public class GenreController {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(genreService.insertGenre(genreDTO));
         } catch (Exception e) {
+            log.error(e.getMessage());
             return ResponseEntity.status(400).body(e.getMessage());
         }
 
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> deleteGenre(@PathVariable Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(genreService.deleteGenre(id));
+    public ResponseEntity deleteGenre(@PathVariable Long id) {
+        try{
+            genreService.deleteGenre(id);
+            return ResponseEntity.ok().build();
+        }catch (IllegalStateException e){
+            log.error(e.getMessage());
+            return ResponseEntity.status(409).body(e.getMessage());
+        }catch (Exception ex){
+            log.error(ex.getMessage());
+            return ResponseEntity.status(500).body(ex.getMessage());
+        }
     }
     @DeleteMapping
-    public ResponseEntity<Boolean> deleteGenre(@RequestBody GenreDTO genreDTO) {
-        return ResponseEntity.status(HttpStatus.OK).body(genreService.deleteGenre(genreDTO));
+    public ResponseEntity<?> deleteGenre(@RequestBody GenreDTO genreDTO) {
+        try{
+            genreService.deleteGenre(genreDTO);
+            return ResponseEntity.ok().build();
+        }catch (IllegalStateException e){
+            log.error(e.getMessage());
+            return ResponseEntity.status(409).body(e.getMessage());
+        }catch (Exception ex){
+            log.error(ex.getMessage());
+            return ResponseEntity.status(500).body(ex.getMessage());
+        }
     }
 
 

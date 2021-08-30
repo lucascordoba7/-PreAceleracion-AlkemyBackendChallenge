@@ -19,7 +19,7 @@ public class GenreModel {
     @Column(name = "genre_id")
     private Long id;
 
-    @Column(name = "genre_name",unique = true)
+    @Column(name = "genre_name")
     private String name;
 
     @Column(name = "genre_image")
