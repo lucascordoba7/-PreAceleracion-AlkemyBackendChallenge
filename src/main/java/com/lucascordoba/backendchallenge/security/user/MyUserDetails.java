@@ -32,7 +32,7 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return "{noop}"+this.password;
+        return this.password;
     }
 
     @Override

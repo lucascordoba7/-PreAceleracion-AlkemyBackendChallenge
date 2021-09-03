@@ -4,6 +4,7 @@ import com.lucascordoba.backendchallenge.dto.UserDTO;
 import com.lucascordoba.backendchallenge.models.User;
 import com.lucascordoba.backendchallenge.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ import java.util.Optional;
 public class UserServiceImpl implements  UserService{
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Override
     public List<UserDTO> listUsers() {
@@ -39,7 +42,7 @@ public class UserServiceImpl implements  UserService{
     public void insertUser(UserDTO user) {
         if(user.getRole()==null || !user.getRole().contains("ROLE_ADMIN")){
             user.setRole("ROLE_USER");}
-
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user.buildEntity());
 
 
